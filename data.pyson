@@ -1,0 +1,56 @@
+object1: OrderedDict
+    key1: "value 1"
+    key2: "value 2"
+    key3: "value 3"
+int-1: 5
+int2: -10
+-int3: False
+float1: 0.5
+float2: -0.5
+float3: 0.2e5
+float4: -15.2E-5
+float5: nan
+float6: -nan
+float7: inf
+float8: -inf
+1.2E5: test
+# Test comment
+"string1": "asd"
+list1: [1, 2, 3, r"4"]
+object2: {
+    "key1": r"value1"
+}
+string2: blah.y
+list2: [
+    "element 1"
+    "element 2"
+    "element 3"
+]
+bytes1: b"abs"
+regex1: r"(abc)?[1-9]"
+object3: key1: value1
+list3: [
+    key: value1
+]
+b"bytesKey": "bytes value"
+set1: {
+    "element 1"
+    "element 2"
+    "element 3"
+}
+object4: @object3
+    key2: value2
+object5:
+    **object4
+    key3: value3
+list4: sorted([1, 2, 4, 3])
+list5:
+    - el 1
+    - el 2
+    - el 3
+    - el 4
+    - el 5
+    - *r"list4"
+string3: r'''(?x)
+        (?![abc]) \w*
+'''

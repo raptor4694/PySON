@@ -1,0 +1,133 @@
+BLANKS: {NEWLINE | INDENT | DEDENT | NL}
+ENTER: NEWLINE INDENT
+EXIT: NEWLINE DEDENT
+
+list: '[' [
+            ENTER (
+                value [
+                    ',' BLANKS [value {',' BLANKS value} [',' BLANKS]]
+                    |
+                    {NEWLINE value}
+                ]
+                |
+                key_value [
+                    ',' BLANKS [key_value {',' BLANKS key_value} [',' BLANKS]]
+                    |
+                    {NEWLINE key_value}
+                ]
+                |
+                ',' BLANKS
+            ) EXIT
+            |
+            NEWLINE [
+                value [
+                    ',' BLANKS [value {',' BLANKS value} [',' BLANKS]]
+                    |
+                    {NEWLINE value}
+                ]
+                |
+                key_value [
+                    ',' BLANKS [key_value {',' BLANKS key_value} [',' BLANKS]]
+                    |
+                    {NEWLINE key_value}
+                ]
+                |
+                ',' BLANKS
+            ]
+            |
+            BLANKS (
+                inline_value {BLANKS ',' BLANKS inline_value} [BLANKS ',' BLANKS]
+                |
+                inline_key_value {BLANKS ',' BLANKS inline_key_value} [BLANKS ',' BLANKS]
+            )
+          ] ']'
+inline_list: '[' [BLANKS inline_value {BLANKS ',' BLANKS inline_value}] [BLANKS ',' BLANKS] ']'
+tuple: '(' [
+            ENTER (
+                value [
+                    ',' BLANKS [value {',' BLANKS value} [',' BLANKS]]
+                    |
+                    {NEWLINE value}
+                ]
+                |
+                key_value [
+                    ',' BLANKS [key_value {',' BLANKS key_value} [',' BLANKS]]
+                    |
+                    {NEWLINE key_value}
+                ]
+                |
+                ',' BLANKS
+            ) EXIT
+            |
+            NEWLINE [
+                value [
+                    ',' BLANKS [value {',' BLANKS value} [',' BLANKS]]
+                    |
+                    {NEWLINE value}
+                ]
+                |
+                key_value [
+                    ',' BLANKS [key_value {',' BLANKS key_value} [',' BLANKS]]
+                    |
+                    {NEWLINE key_value}
+                ]
+                |
+                ',' BLANKS
+            ]
+            |
+            BLANKS (
+                inline_value {BLANKS ',' BLANKS inline_value} [BLANKS ',' BLANKS]
+                |
+                inline_key_value {BLANKS ',' BLANKS inline_key_value} [BLANKS ',' BLANKS]
+            )
+          ] ')'
+inline_tuple: '(' [BLANKS inline_value {BLANKS ',' BLANKS inline_value}] [BLANKS ',' BLANKS] ')'
+object_or_set: '{' [
+            ENTER (
+                value [
+                    ',' BLANKS [value {',' BLANKS value} [',' BLANKS]]
+                    |
+                    {NEWLINE value}
+                ]
+                |
+                key_value [
+                    ',' BLANKS [key_value {',' BLANKS key_value} [',' BLANKS]]
+                    |
+                    {NEWLINE key_value}
+                ]
+                |
+                ',' BLANKS
+            ) EXIT
+            |
+            NEWLINE [
+                value [
+                    ',' BLANKS [value {',' BLANKS value} [',' BLANKS]]
+                    |
+                    {NEWLINE value}
+                ]
+                |
+                key_value [
+                    ',' BLANKS [key_value {',' BLANKS key_value} [',' BLANKS]]
+                    |
+                    {NEWLINE key_value}
+                ]
+                |
+                ',' BLANKS
+            ]
+            |
+            BLANKS (
+                inline_value {BLANKS ',' BLANKS inline_value} [BLANKS ',' BLANKS]
+                |
+                inline_key_value {BLANKS ',' BLANKS inline_key_value} [BLANKS ',' BLANKS]
+            )
+          ] '}'
+inline_object_or_set: '{' [BLANKS (
+                                inline_key_value {BLANKS ',' BLANKS inline_key_value}
+                                |
+                                inline_value {BLANKS ',' BLANKS inline_value}
+                            )] [BLANKS ',' BLANKS] '}'
+value: list | tuple | object_or_set | simple_value
+inline_value: inline_list | inline_tuple | inline_object_or_set | simple_value
+
+key_value: key ':' (section_body | value)
+inline_key_value: key BLANKS ':' BLANKS inline_value
